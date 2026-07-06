@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuote } from '../../context/QuoteContext.jsx';
+import { priceEstimateFor } from '../../data/partMeta.js';
 
 const EBAY_FONT = { fontFamily: 'Arial, Helvetica, sans-serif' };
 
@@ -19,6 +20,7 @@ function ListingRow({ part, index }) {
   const { addItem } = useQuote();
   const [added, setAdded] = useState(false);
   const stock = CONDITION_TEXT[part.stock];
+  const estimate = priceEstimateFor(part);
 
   const handleBuy = () => {
     addItem(part);
@@ -46,9 +48,15 @@ function ListingRow({ part, index }) {
         <p className={`mt-1 text-xs ${stock.className}`}>{stock.text}</p>
       </div>
 
-      <div className="flex w-36 shrink-0 flex-col items-end gap-1 text-right">
-        <p className="text-[10px] text-[#767676]">Price:</p>
-        <p className="text-base font-bold text-[#333333]">${part.price.toLocaleString()}</p>
+      <div className="flex w-40 shrink-0 flex-col items-end gap-1 text-right">
+        <p className="text-[10px] text-[#767676]">Est. price:</p>
+        {estimate.isRange ? (
+          <p className="text-sm font-bold leading-tight text-[#333333]">
+            ${estimate.low.toLocaleString()} - ${estimate.high.toLocaleString()}
+          </p>
+        ) : (
+          <p className="text-base font-bold text-[#333333]">${estimate.amount.toLocaleString()}</p>
+        )}
         <p className="text-[11px] italic text-[#767676]">or Best Offer</p>
         {part.leadTimeDays > 0 && (
           <p className="text-[11px] text-[#767676]">+ {part.leadTimeDays}d handling</p>

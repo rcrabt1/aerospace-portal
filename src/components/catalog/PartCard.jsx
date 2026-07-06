@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, Star, ShoppingCart } from 'lucide-react';
 import { imageForPart } from '../../data/categoryImages.js';
-import { ratingFor } from '../../data/partMeta.js';
+import { formatPriceEstimate, ratingFor } from '../../data/partMeta.js';
 import { useQuote } from '../../context/QuoteContext.jsx';
 import StockBadge from './StockBadge.jsx';
 
@@ -50,9 +50,9 @@ export default function PartCard({ part }) {
         <p className="line-clamp-2 text-sm text-chrome/60">{part.description}</p>
 
         <div className="mt-auto flex flex-col gap-2 pt-3">
-          <div className="flex items-center justify-between">
-            <span className="text-lg font-bold text-accent">
-              ${part.price.toLocaleString()}
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-base font-bold leading-tight text-accent">
+              {formatPriceEstimate(part)}
             </span>
             <StockBadge stock={part.stock} leadTimeDays={part.leadTimeDays} />
           </div>

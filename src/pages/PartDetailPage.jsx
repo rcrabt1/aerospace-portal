@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart } from 'lucide-react';
 import { PARTS } from '../data/parts.js';
 import { imageForPart } from '../data/categoryImages.js';
-import { ratingFor } from '../data/partMeta.js';
+import { formatPriceEstimate, ratingFor } from '../data/partMeta.js';
 import StockBadge from '../components/catalog/StockBadge.jsx';
 import { useQuote } from '../context/QuoteContext.jsx';
 
@@ -86,8 +86,13 @@ export default function PartDetailPage() {
             </dd>
           </dl>
 
-          <div className="mt-6 flex items-center justify-between">
-            <span className="text-3xl font-bold text-accent">${part.price.toLocaleString()}</span>
+          <div className="mt-6 flex items-end justify-between gap-3">
+            <div>
+              <p className="text-xs text-chrome/50">Estimated price</p>
+              <span className="text-2xl font-bold leading-tight text-accent">
+                {formatPriceEstimate(part)}
+              </span>
+            </div>
             <StockBadge stock={part.stock} leadTimeDays={part.leadTimeDays} />
           </div>
 

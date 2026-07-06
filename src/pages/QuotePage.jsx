@@ -74,7 +74,7 @@ export default function QuotePage() {
                 {item.id}
               </p>
               <h3 className="truncate text-sm font-semibold text-chrome">{item.name}</h3>
-              <p className="text-sm text-chrome/60">${item.price.toLocaleString()} each</p>
+              <p className="text-sm text-chrome/60">Est. ${item.price.toLocaleString()} each</p>
             </div>
 
             <div className="flex items-center gap-2">
@@ -95,8 +95,8 @@ export default function QuotePage() {
               </button>
             </div>
 
-            <span className="w-24 shrink-0 text-right text-sm font-semibold text-chrome">
-              ${(item.price * item.quantity).toLocaleString()}
+            <span className="w-28 shrink-0 text-right text-sm font-semibold text-chrome">
+              Est. ${(item.price * item.quantity).toLocaleString()}
             </span>
 
             <button
@@ -113,7 +113,7 @@ export default function QuotePage() {
 
       <div className="mt-4 flex items-center justify-between">
         <span className="text-sm text-chrome/60">Estimated total</span>
-        <span className="text-xl font-bold text-accent">${total.toLocaleString()}</span>
+        <span className="text-xl font-bold text-accent">Est. ${total.toLocaleString()}</span>
       </div>
 
       <button
