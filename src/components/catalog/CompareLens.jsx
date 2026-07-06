@@ -10,6 +10,7 @@ export default function CompareLens({ results }) {
   const [position, setPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [maxHeight, setMaxHeight] = useState(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const recomputeHeight = useCallback(() => {
     const legacyHeight = legacyRef.current?.scrollHeight ?? 0;
@@ -61,6 +62,7 @@ export default function CompareLens({ results }) {
   const handlePointerDown = (e) => {
     updatePosition(e.clientX);
     setIsDragging(true);
+    setHasInteracted(true);
   };
 
   return (
@@ -114,7 +116,9 @@ export default function CompareLens({ results }) {
             onPointerDown={handlePointerDown}
             className="sticky left-0 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 cursor-col-resize touch-none items-center justify-center rounded-full border-2 border-white bg-accent shadow-2xl"
           >
-            <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-accent/50" />
+            {!hasInteracted && (
+              <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-accent/50" />
+            )}
             <MoveHorizontal className="h-6 w-6 text-white" strokeWidth={2.5} />
           </button>
         </div>
