@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { GripVertical } from 'lucide-react';
+import { MoveHorizontal } from 'lucide-react';
 import LegacyResultsGrid from './LegacyResultsGrid.jsx';
 import RedesignedResultsGrid from './RedesignedResultsGrid.jsx';
 
@@ -36,20 +36,26 @@ export default function CompareLens({ results }) {
   };
 
   return (
-    <div>
-      <div className="flex items-center gap-2 px-1 pt-4 text-xs text-chrome/50">
-        <GripVertical className="h-3.5 w-3.5" />
-        Drag the divider to compare the legacy portal against the redesign.
-      </div>
+    <div className="mt-6">
+      <h2 className="text-lg font-semibold text-chrome">Legacy vs. redesigned</h2>
+      <p className="mt-1 text-sm text-chrome/60">
+        Drag the handle left and right. Both sides show the exact same search results, only the
+        experience changes.
+      </p>
+
       <div
         ref={containerRef}
-        className="relative mt-3 select-none border-y border-hairline"
+        className="relative mt-4 select-none border-4 border-chrome shadow-xl"
       >
-        <div className="absolute left-3 top-3 z-20 rounded-full bg-gray-700 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white shadow">
-          Legacy
-        </div>
-        <div className="absolute right-3 top-3 z-20 rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white shadow">
-          Redesigned
+        <div className="sticky top-4 z-20 h-0 overflow-visible">
+          <div className="pointer-events-none flex justify-between px-4">
+            <span className="rounded-full bg-gray-700 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg">
+              Legacy
+            </span>
+            <span className="rounded-full bg-accent px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg">
+              Redesigned
+            </span>
+          </div>
         </div>
 
         <RedesignedResultsGrid results={results} />
@@ -65,14 +71,15 @@ export default function CompareLens({ results }) {
           className="absolute inset-y-0 z-10 flex w-0 justify-center"
           style={{ left: `${position}%` }}
         >
-          <div className="h-full w-0.5 bg-chrome" />
+          <div className="h-full w-1 bg-accent shadow-[0_0_0_1px_rgba(0,0,0,0.4)]" />
           <button
             type="button"
             aria-label="Drag to compare legacy and redesigned catalog"
             onPointerDown={handlePointerDown}
-            className="sticky top-1/2 flex h-9 w-9 shrink-0 -translate-x-1/2 -translate-y-1/2 cursor-col-resize touch-none items-center justify-center rounded-full border border-hairline bg-white shadow-md"
+            className="sticky top-1/2 flex h-14 w-14 shrink-0 -translate-x-1/2 -translate-y-1/2 cursor-col-resize touch-none items-center justify-center rounded-full border-2 border-white bg-accent shadow-2xl"
           >
-            <GripVertical className="h-4 w-4 text-chrome/60" />
+            <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-accent/50" />
+            <MoveHorizontal className="h-6 w-6 text-white" strokeWidth={2.5} />
           </button>
         </div>
       </div>

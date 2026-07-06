@@ -7,7 +7,7 @@ export default function RedesignedResultsGrid({ results }) {
         <PartCard key={part.id} part={part} />
       ))}
       {results.length === 0 && (
-        <p className="flex h-28 items-center justify-center text-sm text-chrome/50">
+        <p className="flex h-36 items-center justify-center text-sm text-chrome/50">
           No parts match those filters.
         </p>
       )}
