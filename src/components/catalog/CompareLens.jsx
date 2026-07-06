@@ -23,10 +23,15 @@ export default function CompareLens({ results }) {
 
   useEffect(() => {
     recomputeHeight();
-    const raf = requestAnimationFrame(recomputeHeight);
+    document.fonts?.ready?.then(recomputeHeight);
+
+    const observer = new ResizeObserver(recomputeHeight);
+    if (legacyRef.current) observer.observe(legacyRef.current);
+    if (redesignedRef.current) observer.observe(redesignedRef.current);
+
     window.addEventListener('resize', recomputeHeight);
     return () => {
-      cancelAnimationFrame(raf);
+      observer.disconnect();
       window.removeEventListener('resize', recomputeHeight);
     };
   }, [recomputeHeight, results]);
@@ -82,28 +87,25 @@ export default function CompareLens({ results }) {
           </div>
         </div>
 
-        <div ref={redesignedRef} className="absolute inset-0">
+        <div ref={redesignedRef} className="absolute inset-x-0 top-0">
           <RedesignedResultsGrid results={results} />
         </div>
 
         <div
           ref={legacyRef}
-          className="absolute inset-0"
+          className="absolute inset-x-0 top-0"
           style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
         >
           <LegacyResultsGrid results={results} />
         </div>
 
-        <div
-          className="absolute inset-y-0 z-10 flex w-0 justify-center"
-          style={{ left: `${position}%` }}
-        >
-          <div className="h-full w-1 bg-accent shadow-[0_0_0_1px_rgba(0,0,0,0.4)]" />
+        <div className="absolute inset-y-0 z-10" style={{ left: `${position}%` }}>
+          <div className="absolute inset-y-0 left-0 w-1 -translate-x-1/2 bg-accent shadow-[0_0_0_1px_rgba(0,0,0,0.4)]" />
           <button
             type="button"
             aria-label="Drag to compare legacy and redesigned catalog"
             onPointerDown={handlePointerDown}
-            className="sticky top-1/2 flex h-14 w-14 shrink-0 -translate-x-1/2 -translate-y-1/2 cursor-col-resize touch-none items-center justify-center rounded-full border-2 border-white bg-accent shadow-2xl"
+            className="sticky left-0 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 cursor-col-resize touch-none items-center justify-center rounded-full border-2 border-white bg-accent shadow-2xl"
           >
             <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-accent/50" />
             <MoveHorizontal className="h-6 w-6 text-white" strokeWidth={2.5} />

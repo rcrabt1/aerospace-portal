@@ -20,10 +20,6 @@ function ListingRow({ part, index }) {
       }`}
       style={EBAY_FONT}
     >
-      <div className="flex h-20 w-20 shrink-0 flex-col items-center justify-center gap-0.5 border border-[#999999] bg-[#f2f2f2] text-center">
-        <span className="text-[10px] leading-tight text-[#888888]">No image available</span>
-      </div>
-
       <div className="min-w-0 flex-1">
         <h3 className="truncate text-[15px] font-normal text-[#0053a0] underline">
           {part.name}

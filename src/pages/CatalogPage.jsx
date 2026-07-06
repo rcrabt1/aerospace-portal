@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Search } from 'lucide-react';
+import { Info, Search } from 'lucide-react';
 import { CATEGORIES, PLATFORMS, PARTS } from '../data/parts.js';
 import CompareLens from '../components/catalog/CompareLens.jsx';
 
@@ -31,7 +31,15 @@ export default function CatalogPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-8">
-      <h1 className="text-2xl font-semibold text-chrome">Parts Catalog</h1>
+      <div className="flex items-start gap-2 border border-hairline bg-surface px-3 py-2 text-xs text-chrome/60">
+        <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+        <span>
+          Every part number, spec, price, platform, and order on this page is entirely made up
+          for this demo. None of it reflects real products, pricing, or inventory.
+        </span>
+      </div>
+
+      <h1 className="mt-4 text-2xl font-semibold text-chrome">Parts Catalog</h1>
       <p className="mt-1 text-sm text-chrome/60">
         Search by part number or name, then filter by category, platform, or availability.
       </p>
