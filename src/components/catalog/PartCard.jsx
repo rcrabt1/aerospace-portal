@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Star, ShoppingCart } from 'lucide-react';
+import { Check, ShoppingCart } from 'lucide-react';
 import { imageForPart } from '../../data/categoryImages.js';
-import { formatPriceEstimate, ratingFor } from '../../data/partMeta.js';
+import { formatPriceEstimate } from '../../data/partMeta.js';
 import { useQuote } from '../../context/QuoteContext.jsx';
 import StockBadge from './StockBadge.jsx';
 
@@ -10,8 +10,6 @@ export default function PartCard({ part }) {
   const { addItem } = useQuote();
   const [added, setAdded] = useState(false);
   const image = imageForPart(part);
-  const { stars, reviewCount } = ratingFor(part.id);
-  const fullStars = Math.floor(stars);
 
   const handleAdd = () => {
     addItem(part);
@@ -34,28 +32,13 @@ export default function PartCard({ part }) {
             {part.name}
           </h3>
         </Link>
-        <div className="flex items-center gap-1.5">
-          <div className="flex text-warning">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                className="h-3.5 w-3.5"
-                fill={i < fullStars ? 'currentColor' : 'none'}
-                strokeWidth={1.5}
-              />
-            ))}
-          </div>
-          <span className="text-xs text-chrome/50">{reviewCount.toLocaleString()}</span>
-        </div>
         <p className="line-clamp-2 text-sm text-chrome/60">{part.description}</p>
 
         <div className="mt-auto flex flex-col gap-2 pt-3">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-base font-bold leading-tight text-accent">
-              {formatPriceEstimate(part)}
-            </span>
-            <StockBadge stock={part.stock} leadTimeDays={part.leadTimeDays} />
-          </div>
+          <StockBadge stock={part.stock} leadTimeDays={part.leadTimeDays} />
+          <span className="text-base font-bold leading-tight text-accent">
+            {formatPriceEstimate(part)}
+          </span>
           <button
             type="button"
             onClick={handleAdd}
