@@ -69,8 +69,8 @@ export default function CompareLens({ results }) {
     <div className="mt-6">
       <h2 className="text-lg font-semibold text-chrome">Legacy vs. redesigned</h2>
       <p className="mt-1 text-sm text-chrome/60">
-        Drag the handle left and right. Both sides show the exact same search results, only the
-        experience changes.
+        Drag the handle left and right. Same search results on both sides, only the experience
+        changes.
       </p>
 
       <div

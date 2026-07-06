@@ -34,8 +34,8 @@ export default function CatalogPage() {
       <div className="flex items-start gap-2 border border-hairline bg-surface px-3 py-2 text-xs text-chrome/60">
         <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
         <span>
-          Every part number, spec, price, platform, and order on this page is entirely made up
-          for this demo. None of it reflects real products, pricing, or inventory.
+          Every part number, spec, price, and order on this page is made up for this demo. None
+          of it is a real product or price.
         </span>
       </div>
 
