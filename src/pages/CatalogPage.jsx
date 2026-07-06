@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
 import { CATEGORIES, PLATFORMS, PARTS } from '../data/parts.js';
-import PartCard from '../components/catalog/PartCard.jsx';
+import CompareLens from '../components/catalog/CompareLens.jsx';
 
 const AVAILABILITY_OPTIONS = [
   { value: 'all', label: 'All availability' },
@@ -82,17 +82,7 @@ export default function CatalogPage() {
         {results.length} {results.length === 1 ? 'part' : 'parts'}
       </p>
 
-      <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {results.map((part) => (
-          <PartCard key={part.id} part={part} />
-        ))}
-      </div>
-
-      {results.length === 0 && (
-        <p className="mt-10 text-center text-sm text-chrome/50">
-          No parts match those filters.
-        </p>
-      )}
+      <CompareLens results={results} />
     </div>
   );
 }
