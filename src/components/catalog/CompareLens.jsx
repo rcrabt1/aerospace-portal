@@ -73,54 +73,53 @@ export default function CompareLens({ results }) {
         changes.
       </p>
 
-      <div
-        ref={containerRef}
-        className="relative mt-4 select-none border-4 border-chrome shadow-xl"
-        style={{ height: maxHeight ? `${maxHeight}px` : undefined }}
-      >
-        <div className="sticky top-4 z-20 h-0 overflow-visible">
-          <div className="pointer-events-none flex justify-between px-4">
-            <span className="rounded-full bg-chrome px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg">
-              Legacy
-            </span>
-            <span className="rounded-full bg-accent px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg">
-              Redesigned
-            </span>
-          </div>
+      <div className="mt-4 select-none border-4 border-chrome shadow-xl">
+        <div
+          className="flex items-center justify-between px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white"
+          style={{ background: 'linear-gradient(to right, var(--color-chrome), var(--color-accent))' }}
+        >
+          <span>Legacy</span>
+          <span>Redesigned</span>
         </div>
 
         <div
-          ref={redesignedRef}
-          className="absolute inset-x-0 top-0"
+          ref={containerRef}
+          className="relative"
           style={{ height: maxHeight ? `${maxHeight}px` : undefined }}
         >
-          <RedesignedResultsGrid results={results} />
-        </div>
-
-        <div
-          ref={legacyRef}
-          className="absolute inset-x-0 top-0"
-          style={{
-            height: maxHeight ? `${maxHeight}px` : undefined,
-            clipPath: `inset(0 ${100 - position}% 0 0)`,
-          }}
-        >
-          <LegacyResultsGrid results={results} />
-        </div>
-
-        <div className="absolute inset-y-0 z-10" style={{ left: `${position}%` }}>
-          <div className="absolute inset-y-0 left-0 w-1 -translate-x-1/2 bg-accent shadow-[0_0_0_1px_rgba(0,0,0,0.4)]" />
-          <button
-            type="button"
-            aria-label="Drag to compare legacy and redesigned catalog"
-            onPointerDown={handlePointerDown}
-            className="sticky left-0 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 cursor-col-resize touch-none items-center justify-center rounded-full border-2 border-white bg-accent shadow-2xl"
+          <div
+            ref={redesignedRef}
+            className="absolute inset-x-0 top-0"
+            style={{ height: maxHeight ? `${maxHeight}px` : undefined }}
           >
-            {!hasInteracted && (
-              <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-accent/50" />
-            )}
-            <MoveHorizontal className="h-6 w-6 text-white" strokeWidth={2.5} />
-          </button>
+            <RedesignedResultsGrid results={results} />
+          </div>
+
+          <div
+            ref={legacyRef}
+            className="absolute inset-x-0 top-0"
+            style={{
+              height: maxHeight ? `${maxHeight}px` : undefined,
+              clipPath: `inset(0 ${100 - position}% 0 0)`,
+            }}
+          >
+            <LegacyResultsGrid results={results} />
+          </div>
+
+          <div className="absolute inset-y-0 z-10" style={{ left: `${position}%` }}>
+            <div className="absolute inset-y-0 left-0 w-1 -translate-x-1/2 bg-accent shadow-[0_0_0_1px_rgba(0,0,0,0.4)]" />
+            <button
+              type="button"
+              aria-label="Drag to compare legacy and redesigned catalog"
+              onPointerDown={handlePointerDown}
+              className="sticky left-0 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 cursor-col-resize touch-none items-center justify-center rounded-full border-2 border-white bg-accent shadow-2xl"
+            >
+              {!hasInteracted && (
+                <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-accent/50" />
+              )}
+              <MoveHorizontal className="h-6 w-6 text-white" strokeWidth={2.5} />
+            </button>
+          </div>
         </div>
       </div>
     </div>

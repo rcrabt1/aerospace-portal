@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Info, Search } from 'lucide-react';
+import { ChevronDown, Info, Search } from 'lucide-react';
 import { CATEGORIES, PLATFORMS, PARTS } from '../data/parts.js';
 import CompareLens from '../components/catalog/CompareLens.jsx';
 
@@ -55,35 +55,44 @@ export default function CatalogPage() {
             className="w-full border border-hairline bg-white py-2.5 pl-9 pr-3 text-sm text-chrome placeholder:text-chrome/40 focus:border-accent focus:outline-none"
           />
         </div>
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="border border-hairline bg-white px-3 py-2.5 text-sm text-chrome focus:border-accent focus:outline-none"
-        >
-          <option value="all">All categories</option>
-          {CATEGORIES.map((c) => (
-            <option key={c} value={c}>{c}</option>
-          ))}
-        </select>
-        <select
-          value={platform}
-          onChange={(e) => setPlatform(e.target.value)}
-          className="border border-hairline bg-white px-3 py-2.5 text-sm text-chrome focus:border-accent focus:outline-none"
-        >
-          <option value="all">All platforms</option>
-          {PLATFORMS.map((p) => (
-            <option key={p} value={p}>{p}</option>
-          ))}
-        </select>
-        <select
-          value={availability}
-          onChange={(e) => setAvailability(e.target.value)}
-          className="border border-hairline bg-white px-3 py-2.5 text-sm text-chrome focus:border-accent focus:outline-none"
-        >
-          {AVAILABILITY_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
+        <div className="relative">
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full appearance-none border border-hairline bg-white py-2.5 pl-3 pr-9 text-sm text-chrome focus:border-accent focus:outline-none"
+          >
+            <option value="all">All categories</option>
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-chrome/40" />
+        </div>
+        <div className="relative">
+          <select
+            value={platform}
+            onChange={(e) => setPlatform(e.target.value)}
+            className="w-full appearance-none border border-hairline bg-white py-2.5 pl-3 pr-9 text-sm text-chrome focus:border-accent focus:outline-none"
+          >
+            <option value="all">All platforms</option>
+            {PLATFORMS.map((p) => (
+              <option key={p} value={p}>{p}</option>
+            ))}
+          </select>
+          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-chrome/40" />
+        </div>
+        <div className="relative">
+          <select
+            value={availability}
+            onChange={(e) => setAvailability(e.target.value)}
+            className="w-full appearance-none border border-hairline bg-white py-2.5 pl-3 pr-9 text-sm text-chrome focus:border-accent focus:outline-none"
+          >
+            {AVAILABILITY_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-chrome/40" />
+        </div>
       </div>
 
       <p className="mt-4 text-xs font-medium uppercase tracking-wide text-chrome/40">

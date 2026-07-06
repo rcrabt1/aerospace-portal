@@ -57,7 +57,6 @@ function ListingRow({ part, index }) {
         ) : (
           <p className="text-base font-bold text-[#333333]">${estimate.amount.toLocaleString()}</p>
         )}
-        <p className="text-[11px] italic text-[#767676]">or Best Offer</p>
         {part.leadTimeDays > 0 && (
           <p className="text-[11px] text-[#767676]">+ {part.leadTimeDays}d handling</p>
         )}
