@@ -80,7 +80,7 @@ export default function CompareLens({ results }) {
       >
         <div className="sticky top-4 z-20 h-0 overflow-visible">
           <div className="pointer-events-none flex justify-between px-4">
-            <span className="rounded-full bg-gray-700 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg">
+            <span className="rounded-full bg-chrome px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg">
               Legacy
             </span>
             <span className="rounded-full bg-accent px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg">
