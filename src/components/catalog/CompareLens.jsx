@@ -87,14 +87,21 @@ export default function CompareLens({ results }) {
           </div>
         </div>
 
-        <div ref={redesignedRef} className="absolute inset-x-0 top-0">
+        <div
+          ref={redesignedRef}
+          className="absolute inset-x-0 top-0"
+          style={{ height: maxHeight ? `${maxHeight}px` : undefined }}
+        >
           <RedesignedResultsGrid results={results} />
         </div>
 
         <div
           ref={legacyRef}
           className="absolute inset-x-0 top-0"
-          style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
+          style={{
+            height: maxHeight ? `${maxHeight}px` : undefined,
+            clipPath: `inset(0 ${100 - position}% 0 0)`,
+          }}
         >
           <LegacyResultsGrid results={results} />
         </div>

@@ -52,7 +52,7 @@ function ListingRow({ part, index }) {
 
 export default function LegacyResultsGrid({ results }) {
   return (
-    <div className="bg-[#d6d6d6]">
+    <div className="min-h-full bg-[#d6d6d6]">
       <div
         className="border-b border-[#999999] bg-[#e8e8e8] px-3 py-2 text-xs text-[#767676]"
         style={EBAY_FONT}
