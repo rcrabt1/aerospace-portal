@@ -1,3 +1,7 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useQuote } from '../../context/QuoteContext.jsx';
+
 const EBAY_FONT = { fontFamily: 'Arial, Helvetica, sans-serif' };
 
 const CONDITION_TEXT = {
@@ -12,7 +16,16 @@ const beveled = {
 };
 
 function ListingRow({ part, index }) {
+  const { addItem } = useQuote();
+  const [added, setAdded] = useState(false);
   const stock = CONDITION_TEXT[part.stock];
+
+  const handleBuy = () => {
+    addItem(part);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  };
+
   return (
     <div
       className={`flex gap-3 border-b border-[#b0b0b0] px-3 py-3 ${
@@ -21,9 +34,11 @@ function ListingRow({ part, index }) {
       style={EBAY_FONT}
     >
       <div className="min-w-0 flex-1">
-        <h3 className="truncate text-[15px] font-normal text-[#0053a0] underline">
-          {part.name}
-        </h3>
+        <Link to={`/parts/${part.id}`}>
+          <h3 className="truncate text-[15px] font-normal text-[#0053a0] underline">
+            {part.name}
+          </h3>
+        </Link>
         <p className="mt-1 text-xs text-[#767676]">
           Condition: New &nbsp;|&nbsp; Category: {part.category} &nbsp;|&nbsp; Fits: {part.platform}
         </p>
@@ -40,10 +55,11 @@ function ListingRow({ part, index }) {
         )}
         <button
           type="button"
+          onClick={handleBuy}
           className="mt-1 px-3 py-1 text-xs font-bold text-[#333333]"
           style={beveled}
         >
-          Buy It Now
+          {added ? 'Added!' : 'Buy It Now'}
         </button>
       </div>
     </div>
