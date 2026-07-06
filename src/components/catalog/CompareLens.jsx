@@ -1,12 +1,35 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { MoveHorizontal } from 'lucide-react';
 import LegacyResultsGrid from './LegacyResultsGrid.jsx';
 import RedesignedResultsGrid from './RedesignedResultsGrid.jsx';
 
 export default function CompareLens({ results }) {
   const containerRef = useRef(null);
+  const legacyRef = useRef(null);
+  const redesignedRef = useRef(null);
   const [position, setPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
+  const [maxHeight, setMaxHeight] = useState(0);
+
+  const recomputeHeight = useCallback(() => {
+    const legacyHeight = legacyRef.current?.scrollHeight ?? 0;
+    const redesignedHeight = redesignedRef.current?.scrollHeight ?? 0;
+    setMaxHeight(Math.max(legacyHeight, redesignedHeight));
+  }, []);
+
+  useLayoutEffect(() => {
+    recomputeHeight();
+  }, [recomputeHeight, results]);
+
+  useEffect(() => {
+    recomputeHeight();
+    const raf = requestAnimationFrame(recomputeHeight);
+    window.addEventListener('resize', recomputeHeight);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', recomputeHeight);
+    };
+  }, [recomputeHeight, results]);
 
   const updatePosition = useCallback((clientX) => {
     const rect = containerRef.current.getBoundingClientRect();
@@ -46,6 +69,7 @@ export default function CompareLens({ results }) {
       <div
         ref={containerRef}
         className="relative mt-4 select-none border-4 border-chrome shadow-xl"
+        style={{ height: maxHeight ? `${maxHeight}px` : undefined }}
       >
         <div className="sticky top-4 z-20 h-0 overflow-visible">
           <div className="pointer-events-none flex justify-between px-4">
@@ -58,9 +82,12 @@ export default function CompareLens({ results }) {
           </div>
         </div>
 
-        <RedesignedResultsGrid results={results} />
+        <div ref={redesignedRef} className="absolute inset-0">
+          <RedesignedResultsGrid results={results} />
+        </div>
 
         <div
+          ref={legacyRef}
           className="absolute inset-0"
           style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
         >

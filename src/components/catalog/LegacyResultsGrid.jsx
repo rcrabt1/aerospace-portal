@@ -1,57 +1,54 @@
-import { ArrowBigUp, ArrowBigDown, ImageOff, MessageSquare } from 'lucide-react';
-import { votesFor } from '../../data/categoryIcons.js';
+const EBAY_FONT = { fontFamily: 'Arial, Helvetica, sans-serif' };
 
-const STOCK_LABEL = {
-  'in-stock': 'in stock',
-  'low-stock': 'low stock',
-  backordered: 'backordered',
+const CONDITION_TEXT = {
+  'in-stock': { text: 'In stock - more than 10 available', className: 'text-[#333333]' },
+  'low-stock': { text: 'Only 2 left - order soon', className: 'font-bold text-[#cc0000]' },
+  backordered: { text: 'Currently unavailable', className: 'italic text-[#767676]' },
 };
 
-const REDDIT_FONT = { fontFamily: 'Verdana, Geneva, Arial, sans-serif' };
+const beveled = {
+  background: '#e0e0e0',
+  boxShadow: 'inset 1px 1px 0 #ffffff, inset -1px -1px 0 #888888',
+};
 
-function subreddit(category) {
-  return 'r/' + category.replace(/\s+/g, '');
-}
-
-function RedditRow({ part, index }) {
-  const votes = votesFor(part.id);
-  const stockText = STOCK_LABEL[part.stock];
+function ListingRow({ part, index }) {
+  const stock = CONDITION_TEXT[part.stock];
   return (
     <div
-      className={`flex h-36 items-center gap-3 border-b border-[#ccc] px-3 ${
-        index % 2 === 0 ? 'bg-white' : 'bg-[#f6f7f8]'
+      className={`flex gap-3 border-b border-[#b0b0b0] px-3 py-3 ${
+        index % 2 === 0 ? 'bg-white' : 'bg-[#ececec]'
       }`}
-      style={REDDIT_FONT}
+      style={EBAY_FONT}
     >
-      <div className="flex shrink-0 flex-col items-center gap-0.5 text-[#9494a3]">
-        <ArrowBigUp className="h-5 w-5 fill-[#ff4500] text-[#ff4500]" />
-        <span className="text-xs font-bold text-[#1a1a1b]">{votes}</span>
-        <ArrowBigDown className="h-5 w-5" />
-      </div>
-
-      <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center gap-0.5 border border-dashed border-[#ccc] bg-[#f0f0f0]">
-        <ImageOff className="h-5 w-5 text-[#9494a3]" strokeWidth={1.5} />
-        <span className="text-[9px] text-[#9494a3]">no thumb</span>
+      <div className="flex h-20 w-20 shrink-0 flex-col items-center justify-center gap-0.5 border border-[#999999] bg-[#f2f2f2] text-center">
+        <span className="text-[10px] leading-tight text-[#888888]">No image available</span>
       </div>
 
       <div className="min-w-0 flex-1">
-        <h3 className="truncate text-base font-medium text-[#0079d3]">{part.name}</h3>
-        <p className="mt-1 truncate text-xs text-[#787c7e]">
-          submitted to {subreddit(part.category)} &middot; {part.platform} &middot; {part.id}
+        <h3 className="truncate text-[15px] font-normal text-[#0053a0] underline">
+          {part.name}
+        </h3>
+        <p className="mt-1 text-xs text-[#767676]">
+          Condition: New &nbsp;|&nbsp; Category: {part.category} &nbsp;|&nbsp; Fits: {part.platform}
         </p>
-        <p className="mt-1 line-clamp-1 text-xs text-[#1a1a1b]/70">{part.description}</p>
-        <div className="mt-1.5 flex items-center gap-3 text-xs text-[#787c7e]">
-          <span className="flex items-center gap-1">
-            <MessageSquare className="h-3 w-3" />
-            {Math.max(1, votes % 40)} comments
-          </span>
-          <span>share</span>
-          <span>save</span>
-          <span className="text-[#787c7e]">
-            ${part.price.toLocaleString()} &middot; {stockText}
-            {part.leadTimeDays > 0 ? ` · ${part.leadTimeDays}d` : ''}
-          </span>
-        </div>
+        <p className="mt-0.5 text-xs text-[#767676]">Item #: {part.id}</p>
+        <p className={`mt-1 text-xs ${stock.className}`}>{stock.text}</p>
+      </div>
+
+      <div className="flex w-36 shrink-0 flex-col items-end gap-1 text-right">
+        <p className="text-[10px] text-[#767676]">Price:</p>
+        <p className="text-base font-bold text-[#333333]">${part.price.toLocaleString()}</p>
+        <p className="text-[11px] italic text-[#767676]">or Best Offer</p>
+        {part.leadTimeDays > 0 && (
+          <p className="text-[11px] text-[#767676]">+ {part.leadTimeDays}d handling</p>
+        )}
+        <button
+          type="button"
+          className="mt-1 px-3 py-1 text-xs font-bold text-[#333333]"
+          style={beveled}
+        >
+          Buy It Now
+        </button>
       </div>
     </div>
   );
@@ -59,16 +56,22 @@ function RedditRow({ part, index }) {
 
 export default function LegacyResultsGrid({ results }) {
   return (
-    <div className="bg-[#dae0e6]">
+    <div className="bg-[#d6d6d6]">
+      <div
+        className="border-b border-[#999999] bg-[#e8e8e8] px-3 py-2 text-xs text-[#767676]"
+        style={EBAY_FONT}
+      >
+        {results.length} results
+      </div>
       {results.map((part, i) => (
-        <RedditRow key={part.id} part={part} index={i} />
+        <ListingRow key={part.id} part={part} index={i} />
       ))}
       {results.length === 0 && (
         <p
-          className="flex h-36 items-center justify-center text-sm text-[#787c7e]"
-          style={REDDIT_FONT}
+          className="flex h-24 items-center justify-center text-sm text-[#767676]"
+          style={EBAY_FONT}
         >
-          no posts match those filters.
+          Your search returned no listings.
         </p>
       )}
     </div>
